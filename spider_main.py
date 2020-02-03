@@ -1,7 +1,7 @@
 import threading
 import time
 # from mysql_model import Mysql
-from ip_pool import Ip_pool, get_ip, break_ip_pool
+# from ip_pool import Ip_pool, get_ip, break_ip_pool
 from queue import Queue
 from Font_svg import parse_action
 from random import shuffle
@@ -46,11 +46,11 @@ def Spider_Action():
         cookie = cookies.pop()
         thread_num = int(Thread_name.replace('Thread_', ''))
         while not url_queue.empty():   #队列不为空继续运行
-            proxy = get_ip(thread_num)
+            proxy = '定义你的代理'
             # print('{}:本次使用ip为 {}'.format(thread_num, proxy))
             url_data = url_queue.get()
             url = url_data[0]
-            process = url_data[3]
+            process = url_data[1]
             parse_action(cookie, url, proxy, Thread_name, process)
 
 
@@ -60,18 +60,19 @@ def Spider_Action():
         :return:
         """
         global url_queue
-        global ip_go_on_flag
+#         global ip_go_on_flag
 
         start = time.time()
-
-
-        """为ip池构造线程"""
-        t = threading.Thread(target=Ip_pool, args=())
-        t.start()
-        time.sleep(3)
+    
+#         """为ip池构造线程"""
+#         t = threading.Thread(target=Ip_pool, args=())
+#         t.start()
+#         time.sleep(3)
 
         # url_list = Mysql.get_url_list()
-        url_list = []   # 你的待采集url
+        url_list = [('http://www.dianping.com/shop/16790071/review_all', 1)
+        
+        ]   # 你的待采集url队列 第一个元素是url 第二个元素是详情页的起始采集页数
         len_urls = len(url_list)
         print("Tread_main:待采集url获取完成，数量{}".format(len_urls))
         for i in range(0, len_urls):
@@ -91,7 +92,7 @@ def Spider_Action():
         end = time.time()
         print("-------------------------------")
         print("下载完成. 用时{}秒".format(end - start))
-        break_ip_pool()   # 下载完成 停止ip池
+#         break_ip_pool()   # 下载完成 停止ip池
 
 
 
