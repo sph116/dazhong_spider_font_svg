@@ -3,7 +3,7 @@ from lxml import etree
 import re
 import time
 import random
-from mysql_model import Mysql
+# from mysql_model import Mysql
 
 css_headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36',
@@ -196,8 +196,9 @@ def parse_action(cookie, main_url, proxy, Thread_name, progress):
         css_url = "http:" + re.findall('<link rel="stylesheet" type="text/css" href="(.*?svg.*?)">', Text)[0]   # 提取cssurl地址
         html = replace_html(Text, css_url, cookie)         # 原始html 替换节点后 生成带有原文的pdf
         save_data = parse_html(html, shop_id)              # 解析
-        Mysql.save_comment(url, save_data, Thread_name)    # 存储
-        Mysql.modify_statue(main_url, page_num)
+        print(save_data)
+#         Mysql.save_comment(url, save_data, Thread_name)    # 存储
+#         Mysql.modify_statue(main_url, page_num)
 
 
 
